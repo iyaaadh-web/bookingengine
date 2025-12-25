@@ -26,7 +26,7 @@ export default function Layout() {
     }
 
     const navItems = [
-        { icon: LayoutDashboard, label: 'Dashboard', path: '/' },
+        { icon: LayoutDashboard, label: 'Dashboard', path: '/dashboard' },
         { icon: Book, label: 'Resorts', path: '/hotels' },
         { icon: Calendar, label: 'Reservations', path: '/bookings' },
         { icon: Tag, label: 'Pricing', path: '/rates' },

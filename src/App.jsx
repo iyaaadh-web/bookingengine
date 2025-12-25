@@ -1,5 +1,5 @@
 import React from 'react'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 
 // Layouts
 import Layout from './components/Layout'
@@ -27,26 +27,50 @@ export default function App() {
     <Routes>
       {/* Public Routes */}
       <Route element={<PublicLayout />}>
-        <Route index element={<HomePage />} />
-        <Route path="about" element={<AboutPage />} />
-        <Route path="collection" element={<CollectionPage />} />
-        <Route path="contact" element={<ContactPage />} />
+        <Route path="/" element={<HomePage />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/collection" element={<CollectionPage />} />
+        <Route path="/contact" element={<ContactPage />} />
       </Route>
 
       {/* Auth Route */}
       <Route path="/login" element={<Login />} />
 
-      {/* Staff Routes */}
+      {/* Staff Routes - All at root level with Layout wrapper */}
       <Route path="/dashboard" element={<Layout />}>
         <Route index element={<Dashboard />} />
-        <Route path="hotels" element={<Hotels />} />
-        <Route path="bookings" element={<Bookings />} />
-        <Route path="rates" element={<Rates />} />
-        <Route path="invoices" element={<Invoices />} />
-        <Route path="expenses" element={<Expenses />} />
-        <Route path="reports" element={<Reports />} />
-        <Route path="history" element={<BookingHistory />} />
       </Route>
+
+      <Route path="/hotels" element={<Layout />}>
+        <Route index element={<Hotels />} />
+      </Route>
+
+      <Route path="/bookings" element={<Layout />}>
+        <Route index element={<Bookings />} />
+      </Route>
+
+      <Route path="/rates" element={<Layout />}>
+        <Route index element={<Rates />} />
+      </Route>
+
+      <Route path="/invoices" element={<Layout />}>
+        <Route index element={<Invoices />} />
+      </Route>
+
+      <Route path="/expenses" element={<Layout />}>
+        <Route index element={<Expenses />} />
+      </Route>
+
+      <Route path="/reports" element={<Layout />}>
+        <Route index element={<Reports />} />
+      </Route>
+
+      <Route path="/history" element={<Layout />}>
+        <Route index element={<BookingHistory />} />
+      </Route>
+
+      {/* Catch all - redirect to home */}
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   )
 }
