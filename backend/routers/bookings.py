@@ -6,9 +6,9 @@ import uuid
 
 from ..supabase_client import supabase
 from ..schemas import BookingCreate  # Assuming your existing BookingCreate schema
+import os
 
 router = APIRouter(
-    prefix="/bookings",
     tags=["Bookings"],
 )
 

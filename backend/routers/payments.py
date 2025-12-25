@@ -3,9 +3,9 @@ from typing import List
 
 from ..supabase_client import supabase
 from ..schemas import Payment, PaymentCreate
+import os
 
 router = APIRouter(
-    prefix="/payments",
     tags=["Payments"],
 )
 

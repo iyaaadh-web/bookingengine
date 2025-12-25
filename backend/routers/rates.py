@@ -4,9 +4,9 @@ from datetime import date
 
 from ..supabase_client import supabase
 from ..schemas import Rate, RateCreate
+import os
 
 router = APIRouter(
-    prefix="/rates",
     tags=["Rates"],
 )
 

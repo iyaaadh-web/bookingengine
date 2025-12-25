@@ -3,9 +3,9 @@ from pydantic import BaseModel
 from typing import List, Optional
 from ..supabase_client import supabase
 from ..schemas import Invoice, InvoiceCreate
+import os
 
 router = APIRouter(
-    prefix="/invoices",
     tags=["Invoices"],
 )
 
