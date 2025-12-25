@@ -62,7 +62,7 @@ export default function Hotels() {
     return (
         <div className="animation-fade-in">
             <div className="title-row">
-                <h1>Property Profiles</h1>
+                <h1>Resort Properties</h1>
                 <button className="btn btn-primary" onClick={() => { setShowForm(!showForm); setEditingId(null); setForm(initialForm); }}>
                     {showForm ? <X size={18} /> : <Plus size={18} />}
                     {showForm ? 'Close' : 'Add New Property'}

@@ -27,12 +27,12 @@ export default function Layout() {
 
     const navItems = [
         { icon: LayoutDashboard, label: 'Dashboard', path: '/' },
-        { icon: Book, label: 'Properties', path: '/hotels' },
-        { icon: Calendar, label: 'Bookings', path: '/bookings' },
-        { icon: Tag, label: 'Rates', path: '/rates' },
-        { icon: FileText, label: 'Invoices', path: '/invoices' },
+        { icon: Book, label: 'Resorts', path: '/hotels' },
+        { icon: Calendar, label: 'Reservations', path: '/bookings' },
+        { icon: Tag, label: 'Pricing', path: '/rates' },
+        { icon: FileText, label: 'Billing', path: '/invoices' },
         { icon: CreditCard, label: 'Expenses', path: '/expenses' },
-        { icon: PieChart, label: 'Reports', path: '/reports' },
+        { icon: PieChart, label: 'Analytics', path: '/reports' },
         { icon: History, label: 'History', path: '/history' },
     ]
 
@@ -73,7 +73,7 @@ export default function Layout() {
                         <button className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)} style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
                             <Menu size={24} color="#64748b" />
                         </button>
-                        <h2 style={{ fontSize: '1.1rem' }}>Travel Management</h2>
+                        <h2 style={{ fontSize: '1.1rem' }}>Fasmala Travel Management</h2>
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
                         <span style={{ fontSize: '0.9rem', color: 'var(--text-light)' }}>Admin User</span>
