@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { supabase } from '../supabaseClient'
 import { useNavigate, Link } from 'react-router-dom'
-import { Lock, Mail, AlertCircle, ArrowLeft, Loader2, ShieldCheck, Waves } from 'lucide-react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { Lock, Mail, AlertCircle, Loader2 } from 'lucide-react'
 
 export default function Login() {
     const [loading, setLoading] = useState(false)
@@ -26,126 +25,256 @@ export default function Login() {
             navigate('/dashboard')
         } catch (err) {
             console.error('Login error:', err)
-            setError(err.error_description || err.message || "Failed to connect to authentication server. Please check your internet or configuration.")
+            setError(err.error_description || err.message || "Invalid credentials. Please try again.")
         } finally {
             setLoading(false)
         }
     }
 
     return (
-        <div className="min-h-screen bg-brand-dark/5 flex flex-col items-center justify-center p-6 relative overflow-hidden">
-            {/* Ambient Background Elements */}
-            <div className="absolute top-[-10%] right-[-10%] w-[40%] h-[40%] bg-brand-orange/10 rounded-full blur-[120px] animate-pulse"></div>
-            <div className="absolute bottom-[-10%] left-[-10%] w-[40%] h-[40%] bg-brand-orange/5 rounded-full blur-[120px]"></div>
-
-            <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-                className="w-full max-w-[480px] z-10"
-            >
-                <Link to="/" className="inline-flex items-center gap-2 text-gray-500 hover:text-brand-orange transition-colors font-medium mb-12 group">
-                    <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
-                    <span>Return to Fasmala Travels</span>
-                </Link>
-
-                <div className="bg-white/80 backdrop-blur-xl border border-white/50 rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.05)] p-10 md:p-12 relative overflow-hidden">
-                    {/* Decorative Top Accent */}
-                    <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-brand-orange via-orange-400 to-brand-orange"></div>
-
-                    <div className="text-center mb-10">
-                        <Link to="/" className="inline-block mb-8 hover:scale-105 transition-transform duration-300">
-                            <img src="/logo.png" alt="Fasmala Travels" className="h-16 w-auto" />
-                        </Link>
-                        <div className="space-y-2">
-                            <h1 className="text-4xl font-serif font-bold text-gray-900">Staff Portal</h1>
-                            <p className="text-gray-500 font-medium tracking-tight">Access management & reservations</p>
-                        </div>
+        <div style={{
+            minHeight: '100vh',
+            background: 'linear-gradient(135deg, #fff5eb 0%, #ffffff 100%)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '20px',
+            fontFamily: "'Inter', sans-serif"
+        }}>
+            <div style={{
+                width: '100%',
+                maxWidth: '420px',
+                background: 'white',
+                borderRadius: '16px',
+                boxShadow: '0 10px 40px rgba(245, 158, 11, 0.1)',
+                padding: '48px 40px',
+                border: '1px solid rgba(245, 158, 11, 0.1)'
+            }}>
+                {/* Logo and Header */}
+                <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+                    <div style={{
+                        width: '80px',
+                        height: '80px',
+                        background: 'linear-gradient(135deg, #f59e0b 0%, #ea580c 100%)',
+                        borderRadius: '16px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        margin: '0 auto 20px',
+                        boxShadow: '0 8px 20px rgba(245, 158, 11, 0.3)'
+                    }}>
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                            <circle cx="12" cy="10" r="3" />
+                        </svg>
                     </div>
-
-                    <AnimatePresence>
-                        {error && (
-                            <motion.div
-                                initial={{ opacity: 0, height: 0, mb: 0 }}
-                                animate={{ opacity: 1, height: 'auto', mb: 24 }}
-                                exit={{ opacity: 0, height: 0, mb: 0 }}
-                                className="overflow-hidden"
-                            >
-                                <div className="p-4 bg-red-50 border border-red-100 rounded-2xl flex items-start gap-3 text-red-600">
-                                    <AlertCircle size={20} className="shrink-0 mt-0.5" />
-                                    <p className="text-sm font-semibold">{error}</p>
-                                </div>
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
-
-                    <form onSubmit={handleLogin} className="space-y-6">
-                        <div className="space-y-2">
-                            <label className="text-xs font-black uppercase tracking-widest text-gray-400 ml-1">Work Email</label>
-                            <div className="relative group">
-                                <div className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-brand-orange transition-colors">
-                                    <Mail size={18} />
-                                </div>
-                                <input
-                                    type="email"
-                                    placeholder="name@fasmala.com"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    className="w-full pl-14 pr-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:bg-white focus:ring-4 focus:ring-brand-orange/5 focus:border-brand-orange outline-none transition-all placeholder:text-gray-300 text-[15px] font-medium"
-                                    required
-                                />
-                            </div>
-                        </div>
-
-                        <div className="space-y-2">
-                            <div className="flex justify-between items-center ml-1">
-                                <label className="text-xs font-black uppercase tracking-widest text-gray-400">Password</label>
-                                <a href="#" className="text-xs font-bold text-brand-orange hover:text-brand-dark transition-colors">Recover Access</a>
-                            </div>
-                            <div className="relative group">
-                                <div className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-brand-orange transition-colors">
-                                    <Lock size={18} />
-                                </div>
-                                <input
-                                    type="password"
-                                    placeholder="••••••••"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    className="w-full pl-14 pr-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:bg-white focus:ring-4 focus:ring-brand-orange/5 focus:border-brand-orange outline-none transition-all placeholder:text-gray-300 text-[15px] font-medium"
-                                    required
-                                />
-                            </div>
-                        </div>
-
-                        <button
-                            disabled={loading}
-                            className="w-full py-4.5 bg-brand-dark text-white rounded-2xl font-bold text-lg hover:bg-gray-900 transition-all flex items-center justify-center gap-3 shadow-[0_10px_30px_rgba(0,0,0,0.1)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.2)] mt-8 disabled:opacity-70 disabled:cursor-not-allowed group h-[60px]"
-                        >
-                            {loading ? (
-                                <Loader2 size={24} className="animate-spin" />
-                            ) : (
-                                <>
-                                    <span>Sign In to Dashboard</span>
-                                    <ShieldCheck size={20} className="group-hover:scale-110 transition-transform" />
-                                </>
-                            )}
-                        </button>
-                    </form>
-
-                    <div className="mt-12 pt-8 border-t border-gray-50 text-center">
-                        <p className="text-sm text-gray-400 font-medium">
-                            Authorized personnel only. <br />
-                            <a href="mailto:it@fasmala.com" className="text-brand-orange font-bold hover:underline inline-flex items-center gap-1 mt-2">
-                                <Waves size={14} /> Request Access
-                            </a>
-                        </p>
-                    </div>
+                    <h1 style={{
+                        fontSize: '28px',
+                        fontWeight: '700',
+                        color: '#1f2937',
+                        marginBottom: '8px',
+                        letterSpacing: '-0.5px'
+                    }}>
+                        Fasmala Travels
+                    </h1>
+                    <p style={{
+                        fontSize: '15px',
+                        color: '#6b7280',
+                        fontWeight: '400'
+                    }}>
+                        Staff Portal Access
+                    </p>
                 </div>
-            </motion.div>
 
-            <footer className="mt-12 text-gray-400 text-xs font-medium tracking-[0.2em] uppercase z-10">
-                &copy; 2024 Fasmala Travels & Tours Pvt Ltd
-            </footer>
+                {/* Error Message */}
+                {error && (
+                    <div style={{
+                        background: '#fef2f2',
+                        border: '1px solid #fecaca',
+                        borderRadius: '8px',
+                        padding: '12px 16px',
+                        marginBottom: '24px',
+                        display: 'flex',
+                        alignItems: 'flex-start',
+                        gap: '12px'
+                    }}>
+                        <AlertCircle size={18} style={{ color: '#dc2626', flexShrink: 0, marginTop: '2px' }} />
+                        <span style={{ fontSize: '14px', color: '#991b1b', lineHeight: '1.5' }}>{error}</span>
+                    </div>
+                )}
+
+                {/* Login Form */}
+                <form onSubmit={handleLogin}>
+                    <div style={{ marginBottom: '20px' }}>
+                        <label style={{
+                            display: 'block',
+                            fontSize: '14px',
+                            fontWeight: '600',
+                            color: '#374151',
+                            marginBottom: '8px'
+                        }}>
+                            Email Address
+                        </label>
+                        <div style={{ position: 'relative' }}>
+                            <Mail size={18} style={{
+                                position: 'absolute',
+                                left: '14px',
+                                top: '50%',
+                                transform: 'translateY(-50%)',
+                                color: '#9ca3af'
+                            }} />
+                            <input
+                                type="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                placeholder="admin@fasmala.com"
+                                required
+                                style={{
+                                    width: '100%',
+                                    padding: '12px 14px 12px 44px',
+                                    fontSize: '15px',
+                                    border: '1.5px solid #e5e7eb',
+                                    borderRadius: '8px',
+                                    outline: 'none',
+                                    transition: 'all 0.2s',
+                                    fontFamily: 'inherit'
+                                }}
+                                onFocus={(e) => e.target.style.borderColor = '#f59e0b'}
+                                onBlur={(e) => e.target.style.borderColor = '#e5e7eb'}
+                            />
+                        </div>
+                    </div>
+
+                    <div style={{ marginBottom: '28px' }}>
+                        <label style={{
+                            display: 'block',
+                            fontSize: '14px',
+                            fontWeight: '600',
+                            color: '#374151',
+                            marginBottom: '8px'
+                        }}>
+                            Password
+                        </label>
+                        <div style={{ position: 'relative' }}>
+                            <Lock size={18} style={{
+                                position: 'absolute',
+                                left: '14px',
+                                top: '50%',
+                                transform: 'translateY(-50%)',
+                                color: '#9ca3af'
+                            }} />
+                            <input
+                                type="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                placeholder="••••••••"
+                                required
+                                style={{
+                                    width: '100%',
+                                    padding: '12px 14px 12px 44px',
+                                    fontSize: '15px',
+                                    border: '1.5px solid #e5e7eb',
+                                    borderRadius: '8px',
+                                    outline: 'none',
+                                    transition: 'all 0.2s',
+                                    fontFamily: 'inherit'
+                                }}
+                                onFocus={(e) => e.target.style.borderColor = '#f59e0b'}
+                                onBlur={(e) => e.target.style.borderColor = '#e5e7eb'}
+                            />
+                        </div>
+                    </div>
+
+                    <button
+                        type="submit"
+                        disabled={loading}
+                        style={{
+                            width: '100%',
+                            padding: '14px',
+                            background: loading ? '#d1d5db' : 'linear-gradient(135deg, #f59e0b 0%, #ea580c 100%)',
+                            color: 'white',
+                            fontSize: '15px',
+                            fontWeight: '600',
+                            border: 'none',
+                            borderRadius: '8px',
+                            cursor: loading ? 'not-allowed' : 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            gap: '8px',
+                            transition: 'all 0.2s',
+                            boxShadow: loading ? 'none' : '0 4px 12px rgba(245, 158, 11, 0.3)',
+                            fontFamily: 'inherit'
+                        }}
+                        onMouseEnter={(e) => {
+                            if (!loading) {
+                                e.target.style.transform = 'translateY(-1px)'
+                                e.target.style.boxShadow = '0 6px 16px rgba(245, 158, 11, 0.4)'
+                            }
+                        }}
+                        onMouseLeave={(e) => {
+                            e.target.style.transform = 'translateY(0)'
+                            e.target.style.boxShadow = '0 4px 12px rgba(245, 158, 11, 0.3)'
+                        }}
+                    >
+                        {loading ? (
+                            <>
+                                <Loader2 size={18} style={{ animation: 'spin 1s linear infinite' }} />
+                                <span>Signing In...</span>
+                            </>
+                        ) : (
+                            <span>Sign In to Portal</span>
+                        )}
+                    </button>
+                </form>
+
+                {/* Footer Links */}
+                <div style={{
+                    marginTop: '32px',
+                    paddingTop: '24px',
+                    borderTop: '1px solid #f3f4f6',
+                    textAlign: 'center'
+                }}>
+                    <Link
+                        to="/"
+                        style={{
+                            fontSize: '14px',
+                            color: '#f59e0b',
+                            textDecoration: 'none',
+                            fontWeight: '500',
+                            transition: 'color 0.2s'
+                        }}
+                        onMouseEnter={(e) => e.target.style.color = '#ea580c'}
+                        onMouseLeave={(e) => e.target.style.color = '#f59e0b'}
+                    >
+                        ← Back to Website
+                    </Link>
+                </div>
+
+                {/* Demo Credentials */}
+                <div style={{
+                    marginTop: '24px',
+                    padding: '16px',
+                    background: '#fef3c7',
+                    borderRadius: '8px',
+                    border: '1px solid #fde68a'
+                }}>
+                    <p style={{ fontSize: '12px', color: '#92400e', fontWeight: '600', marginBottom: '6px' }}>
+                        Demo Credentials:
+                    </p>
+                    <p style={{ fontSize: '12px', color: '#78350f', lineHeight: '1.6', margin: 0 }}>
+                        Email: admin@fasmala.com<br />
+                        Password: admin12345
+                    </p>
+                </div>
+            </div>
+
+            <style>{`
+                @keyframes spin {
+                    from { transform: rotate(0deg); }
+                    to { transform: rotate(360deg); }
+                }
+            `}</style>
         </div>
     )
 }
