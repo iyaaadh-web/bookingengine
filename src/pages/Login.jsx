@@ -15,13 +15,6 @@ export default function Login() {
         e.preventDefault()
         setError(null)
 
-        // Graceful check for placeholder configuration before attempting fetch
-        const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-        if (!supabaseUrl || supabaseUrl.includes('placeholder')) {
-            setError("Configuration Required: Please set your valid VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY to connect to the live database.")
-            return
-        }
-
         try {
             setLoading(true)
             const { data, error } = await supabase.auth.signInWithPassword({

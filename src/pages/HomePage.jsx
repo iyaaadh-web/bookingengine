@@ -11,9 +11,7 @@ const HomePage = () => {
         <div>
             <Hero />
             <AboutPreview />
-            <HolidayTypes />
             <ResortCollection />
-            <SustainableTravel />
             <ContactBooking />
         </div>
     );
