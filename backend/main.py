@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 import os
 
@@ -13,22 +14,33 @@ from routers.maintenance import router as maintenance_router
 from routers.hotels import router as hotels_router
 from tasks import start_scheduler
 
-app = FastAPI(title='Cloud Travel Agency API')
+app = FastAPI(title='Fasmala Travel Management API')
 
-app.include_router(bookings_router)
-app.include_router(invoices_router)
-app.include_router(notifications_router)
-app.include_router(rates_router)
-app.include_router(payments_router)
-app.include_router(maintenance_router)
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # In production, replace with specific origins
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Include routers with proper prefixes
+app.include_router(bookings_router, prefix="/bookings", tags=["bookings"])
+app.include_router(invoices_router, prefix="/invoices", tags=["invoices"])
+app.include_router(notifications_router, prefix="/notifications", tags=["notifications"])
+app.include_router(rates_router, prefix="/rates", tags=["rates"])
+app.include_router(payments_router, prefix="/payments", tags=["payments"])
+app.include_router(maintenance_router, prefix="/maintenance", tags=["maintenance"])
 app.include_router(hotels_router, prefix="/hotels", tags=["hotels"])
 
 @app.on_event('startup')
 async def startup_event():
-    print('Starting app...')
+    print('🚀 Fasmala Travel Management API starting...')
     # Start scheduler
     start_scheduler()
+    print('✅ API ready at http://localhost:8000')
 
 @app.get('/')
 async def root():
-    return {'ok': True, 'message': 'Cloud Travel Agency API'}
+    return {'ok': True, 'message': 'Fasmala Travel Management API', 'version': '1.0'}

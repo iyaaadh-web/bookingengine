@@ -1,52 +1,88 @@
-# Fasmala Travels - Luxury Booking Engine
+# Fasmala Travel Management System
 
-A professional Property Management System (PMS) and Booking Engine for Fasmala Travels.
+## Setup Instructions
 
-## Key Features
-- **Dynamic Reservation System**: PMS-style interface with real-time room rate calculation.
-- **Seasonal Rate Management**: Granular control over room rates by season, room type, and occupancy.
-- **Tax Invoice Engine**: Automatic generation of Maldivian tax invoices (GST, Green Tax) with professional PDF-ready print templates.
-- **Executive Dashboard**: Real-time business intelligence with arrival tracking, revenue summary, and operational stats.
-- **Backend API**: Robust FastAPI implementation with Supabase integration.
-- **Automated Notifications**: Built-in scheduler for guest arrival alerts.
+### Frontend Setup
+```bash
+# Install dependencies
+npm install
 
-## Tech Stack
-- **Frontend**: React 18, Vite, Lucide Icons.
-- **Backend**: FastAPI, Pydantic, Supabase (PostgreSQL), APScheduler.
+# Run development server
+npm run dev
+```
 
-## Getting Started
-1. **Setup Backend**:
-   ```bash
-   cd backend
-   pip install -r requirements.txt
-   uvicorn main:app --reload
-   ```
-2. **Setup Frontend**:
-   ```bash
-   npm install
-   npm run dev
-   ```
+The frontend will be available at: `http://localhost:5173`
 
-## Design System
-The application uses a "Classic PMS" aesthetic combined with modern design tokens defined in `src/styles.css`, featuring high-contrast typography, glassmorphism elements, and professional data density.
+### Backend Setup
+```bash
+# Navigate to backend
+cd backend
+
+# Install Python dependencies
+pip install -r requirements.txt
+
+# Run the API server
+uvicorn main:app --reload --port 8000
+```
+
+The API will be available at: `http://localhost:8000`
+
+## Staff Portal Access
+
+**Login Credentials:**
+- Email: `admin@fasmala.com`
+- Password: `admin12345`
+
+## Features
+
+### Public Website
+- Elegant homepage with resort showcase
+- Resort collection gallery
+- About page
+- Contact form
+
+### Staff Management Portal
+- **Dashboard** - Overview and statistics
+- **Resorts** - Manage resort properties
+- **Reservations** - Handle guest bookings
+- **Pricing** - Set and manage rates
+- **Billing** - Generate and track invoices
+- **Expenses** - Track operational costs
+- **Analytics** - View reports and insights
+- **History** - Access past transactions
+
+## Technology Stack
+
+### Frontend
+- React 18 with Vite
+- React Router for navigation
+- Tailwind CSS for styling
+- Framer Motion for animations
+- Lucide React for icons
+- Supabase for authentication
+
+### Backend
+- FastAPI (Python)
+- Supabase (PostgreSQL)
+- APScheduler for background tasks
+- Pydantic for data validation
+
+## Environment Variables
+
+### Frontend (`.env`)
+```env
+VITE_SUPABASE_URL=your_supabase_url
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+VITE_API_URL=http://localhost:8000
+```
+
+### Backend (`backend/.env`)
+```env
+SUPABASE_URL=your_supabase_url
+SUPABASE_KEY=your_supabase_service_key
+DEV_NO_SUPABASE=true  # For development without Supabase
+```
 
 ## Deployment
 
-### Frontend (Vercel)
-This project is pre-configured for Vercel. 
-1. Push this repository to GitHub.
-2. Connect your repository to Vercel.
-3. The `vercel.json` ensures SPA routing works correctly.
-
-### Backend
-> [!IMPORTANT]
-> The backend contains a persistent background scheduler (`APScheduler`) for arrival notifications. For this reason, it is recommended to host the backend on a persistent server (e.g., **Railway**, **Render**, **DigitalOcean**, or **AWS**) rather than Vercel Serverless Functions, which do not support long-running background tasks.
-
-1. Deploy the `backend/` folder to your chosen provider.
-2. Set your environment variables (Supabase URL, Key).
-3. Update `VITE_API_URL` in your Vercel frontend settings to point to your deployed backend.
-
-## Project Structure
-- `/` (Root): Frontend React + Vite application (optimized for Vercel).
-- `/backend`: FastAPI Python application with Supabase integration.
-- `backend/supabase_schema.sql`: Database schema and table definitions.
+The application is configured for deployment on Vercel (frontend) and can use any Python hosting service for the backend (e.g., Railway, Render, Heroku).
